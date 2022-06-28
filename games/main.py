@@ -17,17 +17,31 @@ def run_tiktak():
     tiktaktoe_game.main()
 
 
+def run_fishing():
+    print("Hola pez")
+
+
+WIDTH = 640
+HEIGHT = 200
+
+
 def main():
     root = Tk()
-    root.geometry('640x640')
+    root.geometry(f'{WIDTH}x{HEIGHT}')
     root.configure(bg='beige')
     root.title('Games')
+    label = Label(root, text="Selecciona un juego")
+    label.pack(anchor=CENTER, pady=10)
+    label.config(fg="black", font=(None, 24))
+
     ttk.Button(root, text='Ejecutar puzzle',
-               command=run_puzzle).place(x=100, y=300)
+               command=run_puzzle).place(x=120, y=HEIGHT/2.2)
     ttk.Button(root, text='Ejecutar Dona',
-               command=run_dona).place(x=200, y=300)
+               command=run_dona).place(x=220, y=HEIGHT/2.2)
     ttk.Button(root, text='Ejecutar TikTakToe',
-               command=run_tiktak).place(x=300, y=300)
+               command=run_tiktak).place(x=320, y=HEIGHT/2.2)
+    ttk.Button(root, text='Ejecutar Fishing',
+               command=run_fishing).place(x=440, y=HEIGHT/2.2)
     root.mainloop()
 
 
