@@ -1,11 +1,13 @@
 # pygame-project
 Project made with pygame.
 
-# Pasos para ejecutar:
+## Pasos para ejecutar:
 
-## 1. Crear entorno virtual
-`virtualenv environment`
-## 2. Activar entorno virtual
-`environment\Scripts\activate`
-## 3. Instalar dependencias
+### 1. Crear entorno virtual
+`python -m venv test-env`
+### 2. Activar entorno virtual
+`test-env/Scripts/activate.bat`
+### 3. Clonar repositorio dentro de "test-env"
+`git clone ...`
+### 4. Instalar dependencias
 `pip install -r requirements.txt`
