@@ -9,7 +9,7 @@ GScreen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Game 1")
 programIcon = pygame.image.load('./res/Characters/character_0000_R.png')
 pygame.display.set_icon(programIcon)
-PICTURE = pygame.image.load('https://source.unsplash.com/600x400/?forest')
+PICTURE = pygame.image.load('./res/SampleA.png')
 SONG = './res/Music/TownTheme.mp3'
 
 

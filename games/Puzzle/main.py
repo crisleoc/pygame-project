@@ -1,6 +1,4 @@
-import os
-import sys
-import settings
+import Puzzle.settings.main as settings
 import random
 import pygame
 import io
@@ -67,49 +65,54 @@ def CreateBoard(num_rows, num_cols, num_cells):
     return board, blank_cell_idx
 
 
-def GetImagePath(rootdir):
-    imagenames = os.listdir(rootdir)
-    assert len(imagenames) > 0
-    return os.path.join(rootdir, random.choice(imagenames))
-
-
 def ShowEndInterface(screen, width, height):
     screen.fill(settings.BACKGROUND_COLOR)
-    # font = pygame.font.Font(settings.FONTPATH, width//15)
-    # title = font.render('Good Job! You Won!', True, (233, 150, 122))
-    # rect = title.get_rect()
-    # rect.midtop = (width/2, height/2.5)
-    # screen.blit(title, rect)
+    font = pygame.font.Font(None, width//15)
+    text_1 = font.render('Good Job! You Won!', True, settings.BLACK)
+    text_2 = font.render('Press space to play again', True, settings.BLACK)
+    text_3 = font.render('Press scape to exit', True, settings.BLACK)
+    rect_1 = text_1.get_rect()
+    rect_2 = text_2.get_rect()
+    rect_3 = text_3.get_rect()
+    rect_1.midtop = (width/2, height/2.6)
+    rect_2.midtop = (width/2, height/2)
+    rect_3.midtop = (width/2, height/1.8)
+    screen.blit(text_1, rect_1)
+    screen.blit(text_2, rect_2)
+    screen.blit(text_3, rect_3)
     pygame.display.update()
     while True:
         for event in pygame.event.get():
-            if (event.type == pygame.QUIT) or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+            if event.type == pygame.QUIT:
                 pygame.quit()
-                sys.exit()
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                return False
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                return True
         pygame.display.update()
 
 
 def ShowStartInterface(screen, width, height):
     screen.fill(settings.BACKGROUND_COLOR)
-    # tfont = pygame.font.Font(settings.FONTPATH, width//4)
-    # cfont = pygame.font.Font(settings.FONTPATH, width//20)
-    # title = tfont.render('Puzzle', True, settings.RED)
-    # content1 = cfont.render('Presiona las siguientes teclas para', True, settings.BLUE)
-    # content2 = cfont.render('H-5x5, M-4x4, L-3x3', True, settings.BLUE)
-    # trect = title.get_rect()
-    # trect.midtop = (width/2, height/10)
-    # crect1 = content1.get_rect()
-    # crect1.midtop = (width/2, height/2.2)
-    # crect2 = content2.get_rect()
-    # crect2.midtop = (width/2, height/1.8)
-    # screen.blit(title, trect)
-    # screen.blit(content1, crect1)
-    # screen.blit(content2, crect2)
+    tfont = pygame.font.Font(None, width//4)
+    cfont = pygame.font.Font(None, width//20)
+    title = tfont.render('Puzzle', True, settings.BLACK)
+    content1 = cfont.render(
+        'Presiona las siguientes teclas para ajustar la dificultad', True, settings.BLACK)
+    content2 = cfont.render('H - 5x5, M - 4x4, L - 3x3', True, settings.BLACK)
+    trect = title.get_rect()
+    trect.midtop = (width/2, height/3)
+    crect1 = content1.get_rect()
+    crect1.midtop = (width/2, height/2)
+    crect2 = content2.get_rect()
+    crect2.midtop = (width/2, height/1.8)
+    screen.blit(title, trect)
+    screen.blit(content1, crect1)
+    screen.blit(content2, crect2)
     while True:
         for event in pygame.event.get():
             if (event.type == pygame.QUIT) or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 pygame.quit()
-                sys.exit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == ord('l'):
                     return 3
@@ -120,8 +123,7 @@ def ShowStartInterface(screen, width, height):
         pygame.display.update()
 
 
-def main():
-    pygame.init()
+def runGame():
     clock = pygame.time.Clock()
 
     image_url = f"https://source.unsplash.com/{settings.SCREENSIZE[0]}x{settings.SCREENSIZE[1]}/"
@@ -131,8 +133,8 @@ def main():
     game_img_used = pygame.image.load(image_file)
     game_img_used = pygame.transform.scale(game_img_used, settings.SCREENSIZE)
     game_img_used_rect = game_img_used.get_rect()
+
     screen = pygame.display.set_mode(settings.SCREENSIZE)
-    pygame.display.set_caption('Puzzle')
     size = ShowStartInterface(
         screen, game_img_used_rect.width, game_img_used_rect.height)
     assert isinstance(size, int)
@@ -149,7 +151,6 @@ def main():
         for event in pygame.event.get():
             if (event.type == pygame.QUIT) or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 pygame.quit()
-                sys.exit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT or event.key == ord('a'):
                     blank_cell_idx = moveL(
@@ -206,5 +207,11 @@ def main():
                      game_img_used_rect.height)
 
 
-if __name__ == '__main__':
-    main()
+def main():
+    pygame.init()
+    pygame.display.set_caption('Puzzle')
+    continue_game = True
+    while continue_game == True:
+        runGame()
+    else:
+        pygame.quit()
