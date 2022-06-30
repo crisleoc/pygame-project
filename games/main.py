@@ -3,6 +3,7 @@ from tkinter import ttk
 import Puzzle.main as puzzle_game
 import Dona.main as dona_game
 import TikTakToe.main as tiktaktoe_game
+import Pescar.main as fishingGame
 
 
 def run_puzzle():
@@ -18,7 +19,7 @@ def run_tiktak():
 
 
 def run_fishing():
-    print("Hola pez")
+    fishingGame.main()
 
 
 WIDTH = 640
